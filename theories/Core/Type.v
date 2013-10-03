@@ -13,7 +13,7 @@ Class type (T : Type) : Type :=
 }.
 
 Definition type_from_equal {T} (r : relation T) : type T :=
-{| equal := r 
+{| equal := r
  ; proper := fun x => r x x
  |}.
 
@@ -27,7 +27,7 @@ Existing Class proper.
 Section type.
   Context {T : Type}.
   Variable tT : type T.
-(*  
+(*
   Global Instance Proper_type : Proper T :=
   { proper := fun x => equal x x }.
 *)
@@ -39,13 +39,13 @@ Section type.
   }.
 
   Global Instance proper_left :
-    typeOk -> 
+    typeOk ->
     forall x y : T, equal x y -> proper x.
   Proof.
     clear. intros. eapply only_proper in H0; intuition.
   Qed.
   Global Instance proper_right :
-    typeOk -> 
+    typeOk ->
     forall x y : T, equal x y -> proper y.
   Proof.
     clear. intros. eapply only_proper in H0; intuition.
@@ -54,22 +54,22 @@ Section type.
 End type.
 
 Definition type1 (F : Type -> Type) : Type :=
-  forall {T}, type T -> type (F T).
+  forall T, type T -> type (F T).
 
 Definition type2 (F : Type -> Type -> Type) : Type :=
-  forall {T}, type T -> forall {U}, type U -> type (F T U).
+  forall T, type T -> forall {U}, type U -> type (F T U).
 
 Definition type3 (F : Type -> Type -> Type -> Type) : Type :=
-  forall {T}, type T -> forall {U}, type U -> forall {V}, type V ->  type (F T U V).
+  forall T, type T -> forall {U}, type U -> forall {V}, type V ->  type (F T U V).
 
 Definition typeOk1 F (tF : type1 F) : Type :=
-  forall {T} tT, @typeOk T tT -> typeOk (tF _ tT).
+  forall T tT, @typeOk T tT -> typeOk (tF _ tT).
 
 Definition typeOk2 F (tF : type2 F) : Type :=
-  forall {T} tT, @typeOk T tT -> typeOk1 _ (tF _ tT).
+  forall T tT, @typeOk T tT -> typeOk1 _ (tF _ tT).
 
 Definition typeOk3 F (tF : type3 F) : Type :=
-  forall {T} tT, @typeOk T tT -> typeOk2 _ (tF _ tT).
+  forall T tT, @typeOk T tT -> typeOk2 _ (tF _ tT).
 
 Existing Class type1.
 Existing Class type2.
@@ -84,7 +84,7 @@ Global Instance type1_type2 F (tF : type2 F) T (tT : type T) : type1 (F T) :=
 Global Instance type2_type3 F (tF : type3 F) T (tT : type T) : type2 (F T) :=
   tF _ tT.
 
-Class Oktype T : Type := 
+Class Oktype T : Type :=
 { the_type :> type T
 ; the_proof :> typeOk the_type
 }.
@@ -122,7 +122,7 @@ Proof.
   { split; exact I. }
 Qed.
 
-Add Parametric Relation (T : Type) (tT : type T) (tokT : typeOk tT) : T (@equal _ tT) 
+Add Parametric Relation (T : Type) (tT : type T) (tokT : typeOk tT) : T (@equal _ tT)
   symmetry proved by (@equiv_sym _ _ _)
   transitivity proved by (@equiv_trans _ _ _)
   as equal_rel.
