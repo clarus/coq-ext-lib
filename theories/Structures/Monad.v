@@ -60,7 +60,7 @@ Module MonadNotation.
 End MonadNotation.
 
 Instance Functor_Monad {m} {M:Monad m} : Functor m :=
-{ fmap := @liftM _ _ }.
+mkFunctor m (@liftM _ _).
 
 Instance PFunctor_PMonad {m} {M : PMonad m} : PFunctor m :=
 { FunP := MonP

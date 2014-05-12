@@ -38,10 +38,11 @@ Global Instance Applicative_option : Applicative option :=
 |}.
 
 Global Instance Functor_option : Functor option :=
-{| fmap := fun _ _ f x => match x with
-                            | None => None
-                            | Some x => Some (f x)
-                          end |}.
+  mkFunctor option
+            (fun _ _ f x => match x with
+                              | None => None
+                              | Some x => Some (f x)
+                            end).
 
 Section type.
   Variable T : Type.

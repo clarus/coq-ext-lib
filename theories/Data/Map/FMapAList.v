@@ -154,7 +154,8 @@ Section keyed.
 End keyed.
 
 Global Instance Functor_alist K : Functor (alist K) :=
-{ fmap := fun T U f => map (fun x => (fst x, f (snd x))) }.
+  mkFunctor (alist K)
+            (fun T U f => map (fun x => (fst x, f (snd x)))).
 
 (** Performance Test **)
 (*

@@ -225,4 +225,4 @@ Section type.
 End type.
 
 Global Instance Functor_pmap : Functor pmap :=
-{ fmap := fmap_pmap }.
+  mkFunctor pmap fmap_pmap.

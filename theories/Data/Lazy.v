@@ -20,7 +20,7 @@ Global Instance CoMonad_Lazy : CoMonad Lazy :=
 }.
 
 Global Instance Functor_Lazy : Functor Lazy :=
-{ fmap _A _B f l := fun x => f (l x) }.
+  mkFunctor Lazy (fun _A _B f l x => f (l x)).
 
 Global Instance Monad_Lazy : Monad Lazy :=
 { ret := @_lazy

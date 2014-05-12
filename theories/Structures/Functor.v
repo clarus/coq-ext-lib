@@ -1,4 +1,6 @@
 Require Import ExtLib.Core.Any.
+Require Import ExtLib.Structures.Cat.
+Require Import ExtLib.Structures.CatFunctor.
 
 Set Implicit Arguments.
 Set Strict Implicit.
@@ -6,8 +8,11 @@ Set Strict Implicit.
 Section functor.
   Variable F : Type -> Type.
 
-  Class Functor : Type :=
-  { fmap : forall A B, (A -> B) -> F A -> F B }.
+  Definition Functor := @CatFunctor Category_Type F.
+  Existing Class Functor.
+  Definition fmap {Fun : Functor} := @cmap _ _ Fun.
+  Definition mkFunctor (fmap : forall A B : Type, (A -> B) -> (F A -> F B))
+    := @mkCatFunctor Category_Type F fmap.
 
   Definition ID {T : Type} (f : T -> T) : Prop :=
     forall x, f x = x.
