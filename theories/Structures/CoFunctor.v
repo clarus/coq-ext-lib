@@ -6,7 +6,7 @@ Set Strict Implicit.
 Section functor.
   Variable F : Type -> Type.
 
-  Class CoFunctor : Type :=
+  Class CoFunctor : Type := mkCoFunctor
   { cofmap : forall A B, (B -> A) -> F A -> F B }.
 
   Definition ID {T : Type} (f : T -> T) : Prop :=
