@@ -7,7 +7,7 @@ Set Implicit Arguments.
 Set Strict Implicit.
 Set Asymmetric Patterns.
 
-Inductive fin : nat -> Type :=
+Inductive fin : nat -> Set :=
 | F0 : forall {n}, fin (S n)
 | FS : forall {n}, fin n -> fin (S n).
 

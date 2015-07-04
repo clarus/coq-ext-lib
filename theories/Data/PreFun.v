@@ -9,7 +9,7 @@ Set Strict Implicit.
 Definition Fun A B := A -> B.
 
 Section type.
-  Variables (T : Type@{t}) (U : Type@{u}) (tT : type T) (tU : type U).
+  Variables (T : Type) (U : Type) (tT : type T) (tU : type U).
 
   Global Instance type_Fun  : type (T -> U) :=
   { equal := fun f g => respectful equal equal f g

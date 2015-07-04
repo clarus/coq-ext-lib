@@ -10,7 +10,7 @@ Fixpoint pmap_lookup' (ts : pmap Type) (p : positive) : option Type :=
 Record OneOf (ts : pmap Type) : Type :=
 { index : positive
 ; value : match pmap_lookup' ts index with
-            | None => Empty_set
+            | None => (Empty_set:Type)
             | Some T => T
           end
 }.
@@ -28,18 +28,18 @@ Definition Into {ts} {T : Type} (v : T) (n : positive) (pf : Some T = pmap_looku
 
 Fixpoint asNth' {ts : pmap Type} (p p' : positive)
 : match pmap_lookup' ts p' with
-    | None => Empty_set
+    | None => (Empty_set:Type)
     | Some T => T
   end -> option (match pmap_lookup' ts p with
-                   | None => Empty_set
+                   | None => (Empty_set:Type)
                    | Some T => T
                  end) :=
   match p as p , p' as p'
         return match pmap_lookup' ts p' with
-                 | None => Empty_set
+                 | None => Empty_set:Type
                  | Some T => T
                end -> option (match pmap_lookup' ts p with
-                                | None => Empty_set
+                                | None => (Empty_set:Type)
                                 | Some T => T
                               end)
   with

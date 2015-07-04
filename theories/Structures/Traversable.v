@@ -3,12 +3,12 @@ Require Import ExtLib.Structures.Applicative.
 Set Implicit Arguments.
 Set Maximal Implicit Insertion.
 
-Class Traversable (T : Type@{d} -> Type@{r}) : Type :=
-{ mapT : forall {F : Type@{r} -> Type } {Ap:Applicative F} {A B : Type@{d}}, (A -> F B) -> T A -> F (T B) }.
+Class Traversable (T : Type -> Type) : Type :=
+{ mapT : forall {F : Type -> Type } {Ap:Applicative F} {A B : Type}, (A -> F B) -> T A -> F (T B) }.
 
 Section traversable.
 
-  Definition sequence {T : Type@{d} -> Type@{d}} {Tr:Traversable T} {F : Type@{d} -> Type@{d}} {Ap:Applicative F} {A : Type@{d}}
+  Definition sequence {T : Type -> Type} {Tr:Traversable T} {F : Type -> Type} {Ap:Applicative F} {A : Type}
   : T (F A) -> F (T A) := mapT (@id _).
-  Definition forT  {T : Type@{d} -> Type@{d}} {Tr:Traversable T} {F : Type@{d} -> Type@{d}} {Ap:Applicative F} {A B : Type@{d}} (aT:T A) (f:A -> F B) : F (T B) := mapT f aT.
+  Definition forT  {T : Type -> Type} {Tr:Traversable T} {F : Type -> Type} {Ap:Applicative F} {A B : Type} (aT:T A) (f:A -> F B) : F (T B) := mapT f aT.
 End traversable.

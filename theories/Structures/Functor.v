@@ -3,22 +3,22 @@ Require Import ExtLib.Core.Any.
 Set Implicit Arguments.
 Set Strict Implicit.
 
-Class Functor (F : Type@{d} -> Type) : Type :=
-{ fmap : forall {A B : Type@{d}}, (A -> B) -> F A -> F B }.
+Class Functor (F : Type -> Type) : Type :=
+{ fmap : forall {A B : Type}, (A -> B) -> F A -> F B }.
 
-Definition ID {T : Type@{d}} (f : T -> T) : Prop :=
+Definition ID {T : Type} (f : T -> T) : Prop :=
   forall x, f x = x.
 
-Class PFunctor (F : Type@{d} -> Type) : Type :=
-{ FunP : Type@{d} -> Type
-; pfmap : forall {A B : Type@{d}} {P : FunP B}, (A -> B) -> F A -> F B
+Class PFunctor (F : Type -> Type) : Type :=
+{ FunP : Type -> Type
+; pfmap : forall {A B : Type} {P : FunP B}, (A -> B) -> F A -> F B
 }.
 
 Existing Class FunP.
 Hint Extern 0 (@FunP _ _ _) => progress (simpl FunP) : typeclass_instances.
 
 Global Instance PFunctor_From_Functor
-       (F : Type@{d} -> Type) (FunF : Functor F) : PFunctor F :=
+       (F : Type -> Type) (FunF : Functor F) : PFunctor F :=
 { FunP := Any
 ; pfmap := fun _ _ _ f x => fmap f x
 }.

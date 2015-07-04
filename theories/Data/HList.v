@@ -15,10 +15,10 @@ Set Asymmetric Patterns.
 
 (** Core Type and Functions **)
 Section hlist.
-  Context {iT : Type@{i}}.
-  Variable F : iT -> Type@{d}.
+  Context {iT : Type}.
+  Variable F : iT -> Type.
 
-  Inductive hlist : list iT -> Type@{d} :=
+  Inductive hlist : list iT -> Type :=
   | Hnil  : hlist nil
   | Hcons : forall l ls, F l -> hlist ls -> hlist (l :: ls).
 
@@ -332,13 +332,13 @@ Section hlist.
     end.
 
   Fixpoint hlist_nth ls (h : hlist ls) (n : nat) :
-    match nth_error ls n return Type@{i} with
-      | None => unit
+    match nth_error ls n return Type with
+      | None => unit:Type
       | Some t => F t
     end :=
     match h in hlist ls , n as n
       return match nth_error ls n with
-               | None => unit
+               | None => unit:Type
                | Some t => F t
              end
       with
@@ -350,7 +350,7 @@ Section hlist.
 
   Fixpoint nth_error_hlist_nth ls (n : nat)
   : option (hlist ls -> match nth_error ls n with
-                          | None => Empty_set
+                          | None => Empty_set:Type
                           | Some x => F x
                         end) :=
     match ls as ls
@@ -363,7 +363,7 @@ Section hlist.
       | l :: ls =>
         match n as n
               return option (hlist (l :: ls) -> match nth_error (l :: ls) n with
-                                                  | None => Empty_set
+                                                  | None => Empty_set:Type
                                                   | Some x => F x
                                                 end)
         with
@@ -401,7 +401,7 @@ Section hlist.
     hlist_nth (hlist_app h h') n =
     match nth_error l n as k
       return nth_error l n = k ->
-      match nth_error (l ++ l') n return Type@{i} with
+      match nth_error (l ++ l') n return Type with
         | None => unit
         | Some t => F t
       end
@@ -410,11 +410,11 @@ Section hlist.
         match
           cast1 _ _ _ pf in _ = z ,
           eq_sym pf in _ = w
-          return match w return Type@{i} with
+          return match w return Type with
                    | None => unit
                    | Some t => F t
                  end ->
-                 match z return Type@{i} with
+                 match z return Type with
                    | None => unit
                    | Some t => F t
                  end
@@ -631,7 +631,7 @@ Section hlist.
       nth_error_get_hlist_nth ls n = Some s ->
       exists pf : nth_error ls n = Some (projT1 s),
       forall h, projT2 s h = match pf in _ = t
-                                   return match t return Type@{i} with
+                                   return match t return Type with
                                             | Some t => F t
                                             | None => unit
                                           end

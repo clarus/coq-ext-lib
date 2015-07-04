@@ -3,8 +3,8 @@ Require Import ExtLib.Structures.Monad.
 Set Implicit Arguments.
 Set Maximal Implicit Arguments.
 
-Class MonadReader (T : Type) (m : Type@{d} -> Type) : Type :=
-{ local : forall {t : Type@{d}}, (T -> T) -> m t -> m t
+Class MonadReader (T : Type) (m : Type -> Type) : Type :=
+{ local : forall {t : Type}, (T -> T) -> m t -> m t
 ; ask : m T
 }.
 

@@ -58,14 +58,14 @@ Section type.
 End type.
 
 
-Definition type1 (F : Type@{d} -> Type@{r}) : Type :=
-  forall {T:Type@{d}}, type T -> type (F T).
+Definition type1 (F : Type -> Type) : Type :=
+  forall {T:Type}, type T -> type (F T).
 
-Definition type2 (F : Type@{t} -> Type@{u} -> Type@{v}) : Type :=
-  forall {T:Type@{t}}, type T -> forall {U:Type@{u}}, type U -> type (F T U).
+Definition type2 (F : Type -> Type -> Type) : Type :=
+  forall {T:Type}, type T -> forall {U:Type}, type U -> type (F T U).
 
-Definition type3 (F : Type@{t} -> Type@{u} -> Type@{v} -> Type@{w}) : Type :=
-  forall {T:Type@{t}}, type T -> forall {U:Type@{u}}, type U -> forall {V:Type@{w}}, type V ->  type (F T U V).
+Definition type3 (F : Type -> Type -> Type -> Type) : Type :=
+  forall {T:Type}, type T -> forall {U:Type}, type U -> forall {V:Type}, type V ->  type (F T U V).
 
 Definition typeOk1 F (tF : type1 F) : Type :=
   forall T tT, @typeOk T tT -> typeOk (tF _ tT).

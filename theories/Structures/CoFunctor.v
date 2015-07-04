@@ -4,10 +4,10 @@ Set Implicit Arguments.
 Set Strict Implicit.
 
 Section functor.
-  Variable F : Type@{d} -> Type.
+  Variable F : Type -> Type.
 
   Class CoFunctor : Type :=
-  { cofmap : forall {A B : Type@{d}}, (B -> A) -> F A -> F B }.
+  { cofmap : forall {A B : Type}, (B -> A) -> F A -> F B }.
 
   Definition ID {T : Type} (f : T -> T) : Prop :=
     forall x, f x = x.

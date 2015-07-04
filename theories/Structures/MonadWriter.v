@@ -4,11 +4,11 @@ Require Import ExtLib.Structures.Monoid.
 Set Implicit Arguments.
 Set Maximal Implicit Arguments.
 
-Class MonadWriter (T : Type@{s}) (M : Monoid T)
-            (m : Type@{d} -> Type) : Type :=
+Class MonadWriter (T : Type) (M : Monoid T)
+            (m : Type -> Type) : Type :=
 { tell : T -> m unit
-; listen : forall {A : Type@{d}}, m A -> m (A * T)%type
-; pass : forall {A : Type@{d}}, m (A * (T -> T))%type -> m A
+; listen : forall {A : Type}, m A -> m (A * T)%type
+; pass : forall {A : Type}, m (A * (T -> T))%type -> m A
 }.
 
 Section WriterOps.

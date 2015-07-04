@@ -5,15 +5,15 @@ Require Import ExtLib.Structures.Applicative.
 Set Implicit Arguments.
 Set Strict Implicit.
 
-Class Monad (m : Type@{d} -> Type) : Type :=
-{ ret : forall {t : Type@{d}}, t -> m t
-; bind : forall {t u : Type@{d}}, m t -> (t -> m u) -> m u
+Class Monad (m : Type -> Type) : Type :=
+{ ret : forall {t : Type}, t -> m t
+; bind : forall {t u : Type}, m t -> (t -> m u) -> m u
 }.
 
-Class PMonad (m : Type@{d} -> Type) : Type :=
+Class PMonad (m : Type -> Type) : Type :=
 { MonP : Type -> Type
-; pret : forall {t : Type@{d}} {Pt : MonP t}, t -> m t
-; pbind : forall {t u : Type@{d}} {Pu : MonP u}, m t -> (t -> m u) -> m u
+; pret : forall {t : Type} {Pt : MonP t}, t -> m t
+; pbind : forall {t u : Type} {Pu : MonP u}, m t -> (t -> m u) -> m u
 }.
 
 Existing Class MonP.
@@ -26,21 +26,21 @@ Global Instance PMonad_Monad m (M : Monad m) : PMonad m :=
 }.
 
 Section monadic.
-  Variable m : Type@{d} -> Type.
+  Variable m : Type -> Type.
   Context {M : Monad m}.
 
-  Definition liftM {T U : Type@{d}} (f : T -> U) : m T -> m U :=
+  Definition liftM {T U : Type} (f : T -> U) : m T -> m U :=
     fun x => bind x (fun x => ret (f x)).
 
-  Definition liftM2 {T U V : Type@{d}} (f : T -> U -> V) : m T -> m U -> m V :=
+  Definition liftM2 {T U V : Type} (f : T -> U -> V) : m T -> m U -> m V :=
     Eval cbv beta iota zeta delta [ liftM ] in
       fun x y => bind x (fun x => liftM (f x) y).
 
-  Definition liftM3 {T U V W : Type@{d}} (f : T -> U -> V -> W) : m T -> m U -> m V -> m W :=
+  Definition liftM3 {T U V W : Type} (f : T -> U -> V -> W) : m T -> m U -> m V -> m W :=
     Eval cbv beta iota zeta delta [ liftM2 ] in
       fun x y z => bind x (fun x => liftM2 (f x) y z).
 
-  Definition apM {A B : Type@{d}} (fM:m (A -> B)) (aM:m A) : m B :=
+  Definition apM {A B : Type} (fM:m (A -> B)) (aM:m A) : m B :=
     bind fM (fun f => liftM f aM).
 End monadic.
 

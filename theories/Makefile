@@ -16,7 +16,7 @@ coq: Makefile.coq
 	$(MAKE) -f Makefile.coq
 
 Makefile.coq: Makefile _CoqProject $(VS)
-	@ coq_makefile -f _CoqProject $(VS) -o Makefile.coq
+	@ coq_makefile -f _CoqProject $(VS) -o Makefile.coq -arg -type-in-type
 
 Makefile.test.coq: Makefile $(TVS)
 	coq_makefile $(ARGS) $(TVS) -o Makefile.test.coq

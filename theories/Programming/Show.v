@@ -115,7 +115,7 @@ Definition wrap (before after : showM) (x : showM) : showM :=
 Section sum_Show.
   Import ShowNotation.
   Local Open Scope show_scope.
-  Context {A : Type@{a}} {B : Type@{b}} {AS:Show A} {BS:Show B}.
+  Context {A : Type} {B : Type} {AS:Show A} {BS:Show B}.
   Global Instance sum_Show : Show (A+B) :=
     { show s :=
         let (tag, payload) :=
@@ -188,7 +188,7 @@ Global Instance Show_Z : Show Z :=
     end.
 
 Section pair_Show.
-  Context {A : Type@{a}} {B : Type@{b}} {AS:Show A} {BS:Show B}.
+  Context {A : Type} {B : Type} {AS:Show A} {BS:Show B}.
   Global Instance pair_Show : Show (A*B) :=
     { show p :=
         let (a,b) := p in

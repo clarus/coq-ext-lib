@@ -11,7 +11,7 @@ Set Strict Implicit.
 Section laws.
 
   Class FunctorLaws
-              (F : Type@{t} -> Type@{u})
+              (F : Type -> Type)
               (Functor_F : Functor F)
               (Feq : type1 F)
   : Type :=
