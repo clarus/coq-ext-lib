@@ -1,19 +1,19 @@
-PROJECT_NAME=coq-ext-lib
-
 all: theories examples
 
-theories:
-	$(MAKE) -C theories
+theories: Makefile.coq
+	$(MAKE) -f Makefile.coq
+
+Makefile.coq: _CoqProject
+	coq_makefile -f _CoqProject -o Makefile.coq
 
 install:
-	$(MAKE) -C theories install
+	$(MAKE) -f Makefile.coq install
 
 examples: theories
 	$(MAKE) -C examples
 
 clean:
-	$(MAKE) -C theories clean
-	$(MAKE) -C examples clean
+	$(MAKE) -f Makefile.coq clean
 
 uninstall:
 	$(MAKE) -C theories uninstall
