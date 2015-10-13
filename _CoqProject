@@ -1,5 +1,4 @@
 -Q theories ExtLib
--arg -type-in-type
 
 theories/Core/Any.v
 theories/Core/CmpDec.v
